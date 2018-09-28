@@ -1,6 +1,8 @@
-#Ask for first name
-firstName = input("Please enter your first name:")
-#Ask for last name
-lastName = input("Please enter your last name:")
+#Ask for name
+name = input("Please enter your name:")
+#split the name
+splitStr = name.split()
+#reverse it
+splitStr.reverse()
 #Print the output in reverse order
-print("Your name is: " + lastName + " "+ firstName)
+print("Your name is: ", " ".join(splitStr))
