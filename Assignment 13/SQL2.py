@@ -23,24 +23,24 @@ engine = create_engine('sqlite:///mydb1', echo =False)
 # Create table and load data
 df.to_sql('Adult', engine, if_exists='replace', chunksize=1000)
 
-# # 2. Two update queries 
-# # Print to see the existing values
-# result = engine.execute("SELECT fnlwgt, education FROM Adult WHERE age = 39").fetchall()
-# print("{l} records found".format(l=len(result)))
-# print(result)
-# print("\n")
+# 2. Two update queries 
+# Print to see the existing values
+result = engine.execute("SELECT fnlwgt, education FROM Adult WHERE age = 39").fetchall()
+print("{l} records found".format(l=len(result)))
+print(result)
+print("\n")
 
-# # 2.1
-# engine.execute("UPDATE Adult SET education = '{edu}' WHERE age = 39".format(edu="Technical"))
+# 2.1
+engine.execute("UPDATE Adult SET education = '{edu}' WHERE age = 39".format(edu="Technical"))
 
-# # 2.2
-# engine.execute("UPDATE Adult SET fnlwgt = '{fnlwgt}' WHERE age = 39".format(fnlwgt=0))
+# 2.2
+engine.execute("UPDATE Adult SET fnlwgt = '{fnlwgt}' WHERE age = 39".format(fnlwgt=0))
 
-# # Print to verify if the values changed
-# result = engine.execute("SELECT fnlwgt, education FROM Adult WHERE age = 39").fetchall()
-# print("{l} records found".format(l=len(result)))
-# print(result)
-# print("\n")
+# Print to verify if the values changed
+result = engine.execute("SELECT fnlwgt, education FROM Adult WHERE age = 39").fetchall()
+print("{l} records found".format(l=len(result)))
+print(result)
+print("\n")
 
 # 3. two  delete queries
 engine.execute("DELETE FROM Adult WHERE age = {age}".format(age=39))
@@ -50,4 +50,15 @@ engine.execute("DELETE FROM Adult WHERE fnlwgt = {fnlwgt}".format(fnlwgt=128392)
 engine.execute("SELECT fnlwgt, education FROM Adult WHERE age = {age}".format(age=50))
 engine.execute("SELECT fnlwgt, education FROM Adult WHERE education = '{edu}'".format(edu="Bachelors"))
 
-# 5
+# 5. Function queries
+# Define functions
+def fib(n):
+    a, b = 0, 1
+    for _ in range(n):
+        yield a
+        a, b = b, a + b
+
+# Create a new table with Column named "Value"
+engine.execute('CREATE TABLE IF NOT EXISTS Fib (value INTEGER)')
+engine.execute('INSERT INTO Fib VALUES (?)',[(str(x),) for x in fib(10)])
+print(engine.execute("SELECT * FROM Fib").fetchall())
