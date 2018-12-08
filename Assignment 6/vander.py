@@ -3,10 +3,7 @@ import numpy as np
 
 def generate_vander_matrix(vector, no_of_columns, increasing):
     #define numpy array as input
-    x=np.array(vector)
-    #Show vander array out put Method1
-    # print(np.vander(vector, no_of_columns, increasing=increasing))
-    #show Vander array out with Method2
+    x = np.array(vector)
     start, stop, step = 0, 0, 1
     if not increasing:
         stop = no_of_columns
