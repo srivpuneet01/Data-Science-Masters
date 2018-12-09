@@ -25,7 +25,7 @@ print(pd.read_sql_query(query,sqladb))
 
 # 2. Show me the average hours per week of all men who are working in private sector
 print("\n2. Show me the average hours per week of all men who are working in private sector")
-query = "SELECT sex,workclass, hours_per_week AverageHoursPerWeek FROM Adult where sex = 'Male' and workclass = 'Private'  group by sex,workclass"
+query = "SELECT sex,workclass, avg(hours_per_week) AverageHoursPerWeek FROM Adult where sex = 'Male' and workclass = 'Private'  group by sex,workclass"
 print(pd.read_sql_query(query, sqladb))
 
 # 3. Show me the frequency table for education, occupation and relationship, separately
